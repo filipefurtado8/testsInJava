@@ -2,6 +2,7 @@ package junit.tests.testsInJava.business;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -60,6 +61,21 @@ public class SomeBusinessMockTest {
 
         //Then
         assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void addValueToDatabase() {
+        //SUT
+        Integer[] values = new Integer[]{1, 2, 3};
+        dataMock.addValuesToDatabase(values);
+
+        //Verification
+        ArgumentCaptor<Integer[]> captor = ArgumentCaptor.forClass(Integer[].class);
+        verify(dataMock, times(1)).addValuesToDatabase(captor.capture());
+
+        //Here I'm verifying if the values inserted in the method are the same in the ArgumentCaptor
+        assertEquals(values, captor.getValue());
+
     }
 
 }

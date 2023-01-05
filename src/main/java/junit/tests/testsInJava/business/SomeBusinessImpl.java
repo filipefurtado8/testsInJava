@@ -4,6 +4,7 @@ public class SomeBusinessImpl {
 
     SomeDataService dataService;
 
+
     public int calculateSum(int[] data) {
         int sum = 0;
         for (int value : data) {
@@ -15,12 +16,16 @@ public class SomeBusinessImpl {
     public int calculateSumUsingDataService() {
 
         int sum = 0;
-        
+
         int[] data = dataService.retrieveAllData();
         for (int value : data) {
             sum += value;
         }
         return sum;
+    }
+
+    public void addValuesToDatabaseUsingDataService(Integer[] value) {
+        dataService.addValuesToDatabase(value);
     }
 
     public void setDataService(SomeDataService dataService) {
