@@ -14,7 +14,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -104,6 +107,31 @@ public class ItemControllerTest {
         //in addition JSONAssert.assertEquals expects (expectedResponse, actualResponse, false/true)
         //in this case we chose true, therefore both must be exact (variables and its values)
         JSONAssert.assertEquals("{\"id\":2,\"name\":\"Item2\",\"price\":10,\"quantity\":10}", result.getResponse().getContentAsString(), true);
+    }
+
+    @Test
+    public void retrieveAllItems() throws Exception {
+
+        //since the request communicates with the ItemBusinessService layer and the
+        //businessService is mocked we need to implement this when/then method from Mockito
+
+        when(businessService.retrieveAllItems()).thenReturn(List.of(new Item(2, "Item2", 10, 10),
+                new Item(3, "Item3", 20, 20)));
+
+        //call GET "/all-items-from-database
+        //we use RequestBuilder with MockMvcRequestBuilders to execute our requests
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/all-items-from-database")
+                .accept(MediaType.APPLICATION_JSON);
+
+        //the mockMvc.perform is going to execute the stream above, expect a status 200 and return a Json with the Item
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{id:2,name:Item2,price:10},{id:3,name:Item3,price:20}]"))
+                .andReturn();
+
+        //JSONAssert.assertEquals("[{\"id\":2,\"name\":\"Item2\",\"price\":10,\"quantity\":10},{\"id\":3,\"name\":\"Item3\",\"price\":20,\"quantity\":20}]", result.getResponse().getContentAsString(), false);
     }
 
 }

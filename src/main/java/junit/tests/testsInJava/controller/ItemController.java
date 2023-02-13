@@ -5,6 +5,8 @@ import junit.tests.testsInJava.service.ItemBusinessService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 public class ItemController {
@@ -26,5 +28,8 @@ public class ItemController {
         return businessService.retrieveHardcodedItem();
     }
 
-
+    @GetMapping("/all-items-from-database")
+    public List<Item> retrieveAllItems() {
+        return businessService.retrieveAllItems();
+    }
 }
