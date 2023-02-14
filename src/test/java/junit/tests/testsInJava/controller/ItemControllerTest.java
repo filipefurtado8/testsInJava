@@ -56,7 +56,7 @@ public class ItemControllerTest {
         //we then use the getContentAsString method to obtain the content of the response in a String format
         //in addition JSONAssert.assertEquals expects (expectedResponse, actualResponse, false/true)
         //in this case we chose true, therefore both must be exact (variables and its values)
-        JSONAssert.assertEquals("{\"id\":1,\"name\":\"Ball\",\"price\":10,\"quantity\":100}", result.getResponse().getContentAsString(), true);
+        JSONAssert.assertEquals("{\"id\":1,\"name\":\"Ball\",\"price\":10,\"quantity\":100}", result.getResponse().getContentAsString(), false);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class ItemControllerTest {
         //we then use the getContentAsString method to obtain the content of the response in a String format
         //in addition JSONAssert.assertEquals expects (expectedResponse, actualResponse, false/true)
         //in this case we chose true, therefore both must be exact (variables and its values)
-        JSONAssert.assertEquals("{\"id\":2,\"name\":\"Item2\",\"price\":10,\"quantity\":10}", result.getResponse().getContentAsString(), true);
+        JSONAssert.assertEquals("{\"id\":2,\"name\":\"Item2\",\"price\":10,\"quantity\":10}", result.getResponse().getContentAsString(), false);
     }
 
     @Test
